@@ -15,6 +15,8 @@ export function request<T = any>(url: string, data?: any, method: 'POST' | 'GET'
     if (res.ok) {
       const json = await res.json() as ResponseData<T>
       if (json.code === 0) return json.result
+
+      return Promise.reject(json)
     }
     return Promise.reject(res)
   })
