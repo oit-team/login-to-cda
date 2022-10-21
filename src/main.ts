@@ -8,6 +8,15 @@ function assert(value: any, msg?: string): asserts value {
 async function setup() {
   const searchParams = new URLSearchParams(location.href.split('?')[1])
   const base64Data = searchParams.get('data')
+  const timestamp = searchParams.get('t')
+
+  console.log(!timestamp || +timestamp < Date.now() - 1000 * 60 * 5)
+
+  if (!timestamp || +timestamp < Date.now() - 1000 * 60 * 5) {
+    alert('请求过期，请重试')
+    window.close()
+    return
+  }
 
   assert(base64Data, 'data is null')
 
