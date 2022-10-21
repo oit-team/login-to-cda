@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign out</title>
+</head>
+<body>
+  <div>正在退出...</div>
+  <script>
+    if (localStorage.cda__ACCESS_TOKEN) {
+      fetch("/cda/oauth/v2/login-out", {
+        "headers": {
+          "accept": "application/json, text/plain, */*",
+          "accesstoken": JSON.parse(localStorage.cda__ACCESS_TOKEN),
+        },
+        "method": "POST",
+      })
+    }
+    localStorage.clear()
+    window.close()
+  </script>
+</body>
+</html>
