@@ -1,4 +1,4 @@
-import { sm2 } from 'sm-crypto'
+import { sm3 } from 'sm-crypto'
 import { getKey, login } from './api'
 
 function assert(value: any, msg?: string): asserts value {
@@ -10,9 +10,7 @@ async function setup() {
   const base64Data = searchParams.get('data')
   const timestamp = searchParams.get('t')
 
-  console.log(!timestamp || +timestamp < Date.now() - 1000 * 60 * 5)
-
-  if (!timestamp || +timestamp < Date.now() - 1000 * 60 * 5) {
+  if (!timestamp || +timestamp < Date.now() - 1000 * 60 * 2) {
     alert('请求过期，请重试')
     window.close()
     return
@@ -34,14 +32,14 @@ async function setup() {
 
   const { publicKey: publicKeyRaw } = await getKey()
   const publicKey = publicKeyRaw.split('\r\n')[0]
-  const encrypted = sm2.doEncrypt(password, publicKey, 0)
+  const encrypted = sm3(password)
 
   console.log('publicKey =>', publicKey)
   console.log('encrypted =>', encrypted)
 
   const { accesstoken } = await login({
     username,
-    password: `04${encrypted}`,
+    password: encrypted,
   })
 
   console.log('accesstoken =>', accesstoken)
@@ -55,5 +53,5 @@ async function setup() {
 setup()
   .catch(e => {
     console.error(e)
-    window.alert(e)
+    window.alert(typeof e === 'object' ? JSON.stringify(e) : e)
   })
