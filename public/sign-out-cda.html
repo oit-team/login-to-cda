@@ -11,7 +11,7 @@
       fetch("/cda/oauth/v2/login-out", {
         "headers": {
           "accept": "application/json, text/plain, */*",
-          "accesstoken": JSON.parse(localStorage.cda__ACCESS_TOKEN),
+          "accesstoken": localStorage.cda__ACCESS_TOKEN.replace(/"/g, ''),
         },
         "method": "POST",
       })
