@@ -10,7 +10,7 @@ async function setup() {
   const base64Data = searchParams.get('data')
   const timestamp = searchParams.get('t')
 
-  if (!timestamp || +timestamp < Date.now() - 1000 * 60 * 2) {
+  if (!timestamp || +timestamp < Date.now() - 1000 * 25) {
     alert('请求过期，请重试')
     window.close()
     return
@@ -19,8 +19,6 @@ async function setup() {
   assert(base64Data, 'data is null')
 
   const params = atob(base64Data).split('XX@XX')
-
-  console.log('参数 =>', params)
 
   const username = params[2]
   const password = params[3]
