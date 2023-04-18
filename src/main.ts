@@ -12,7 +12,7 @@ async function setup() {
   const encryptData = searchParams.get('data')
   const timestamp = searchParams.get('t')
 
-  if (!timestamp || +timestamp < Date.now() - 1000 * 25) {
+  if (!timestamp || +timestamp < Date.now() - 1000 * 2) {
     alert('请求过期，请重试')
     window.close()
     return
