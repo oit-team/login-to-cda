@@ -1,5 +1,7 @@
-import { sm3 } from 'sm-crypto'
+import { sm3, sm2 } from 'sm-crypto'
 import { getKey, login } from './api'
+
+const privateKey = 'fe32419fdf9e8a2db5a94b009b0b5dbaea425c046258cfb665c14e1c709693b2'
 
 function assert(value: any, msg?: string): asserts value {
   if (!value) throw new TypeError(msg)
@@ -7,7 +9,7 @@ function assert(value: any, msg?: string): asserts value {
 
 async function setup() {
   const searchParams = new URLSearchParams(location.href.split('?')[1])
-  const base64Data = searchParams.get('data')
+  const encryptData = searchParams.get('data')
   const timestamp = searchParams.get('t')
 
   if (!timestamp || +timestamp < Date.now() - 1000 * 25) {
@@ -16,9 +18,10 @@ async function setup() {
     return
   }
 
-  assert(base64Data, 'data is null')
+  assert(encryptData, 'data is null')
 
-  const params = atob(base64Data).split('XX@XX')
+  const dataTrimmed = encryptData.replace(/^04/, '')
+  const params = sm2.doDecrypt(dataTrimmed, privateKey, 1).split('XX@XX')
 
   const username = params[2]
   const password = params[3]
