@@ -30,12 +30,6 @@ export function post<T>(url: string, data?: any) {
   return request<T>(url, data, 'POST')
 }
 
-export function getKey() {
-  return get<{
-    publicKey: string
-  }>('/cda/sys/v2/secretKey/getKey')
-}
-
 export function login(params: {
   username: string
   password: string

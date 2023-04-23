@@ -1,5 +1,5 @@
 import { sm3, sm2 } from 'sm-crypto'
-import { getKey, login } from './api'
+import { login } from './api'
 
 const privateKey = 'fe32419fdf9e8a2db5a94b009b0b5dbaea425c046258cfb665c14e1c709693b2'
 
@@ -31,8 +31,7 @@ async function setup() {
   assert(password, 'password is null')
   assert(url, 'url is null')
 
-  const { publicKey: publicKeyRaw } = await getKey()
-  const publicKey = publicKeyRaw.split('\r\n')[0]
+  const publicKey = '0488D6BB3CF095E6D9A64E847D6A7A3E50955B78CA2F862CAD5AC4508BAC40D16106688161F68CCF0CB19492FE8ADAF8F0FEB2BAC3C9E9DA0FC6A53D4B7674825B'
   const encrypted = sm3(password)
 
   console.log('publicKey =>', publicKey)
