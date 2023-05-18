@@ -9,11 +9,11 @@
   <script>
     if (localStorage.cda__ACCESS_TOKEN) {
       fetch("/cda/oauth/v2/login-out", {
+        "method": "POST",
         "headers": {
           "accept": "application/json, text/plain, */*",
           "accesstoken": localStorage.cda__ACCESS_TOKEN.replace(/"/g, ''),
         },
-        "method": "POST",
       })
     }
 
@@ -21,7 +21,7 @@
     sessionStorage.clear()
 
     const query = new URLSearchParams(window.location.search)
-    const redirect = query.get('redirect')
+    const redirect = decodeURIComponent(query.get('redirect'))
     window.location.href = redirect
   </script>
 </body>
