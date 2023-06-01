@@ -53,5 +53,9 @@ async function setup() {
 setup()
   .catch(e => {
     console.error(e)
-    window.alert(typeof e === 'object' ? JSON.stringify(e) : e)
+
+    const message = e?.msg 
+      ?? e?.message 
+      ?? (typeof e === 'object' ? JSON.stringify(e) : e)
+    window.alert(message)
   })
