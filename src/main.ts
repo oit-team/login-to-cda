@@ -54,8 +54,8 @@ setup()
   .catch(e => {
     console.error(e)
 
-    const message = e?.msg 
-      ?? e?.message 
+    const message = e?.msg
+      ?? e?.message
       ?? (typeof e === 'object' ? JSON.stringify(e) : e)
     window.alert(message)
   })
